@@ -35,7 +35,7 @@ export class UserService{
 
   async getUsers():Promise<UserDto[]>{
     try{
-      const users = await this.userModel.find();
+      const users = await this.userModel.find({},{password:0});// password:0 means password will not be returned
       return users;
     }catch(err){
       throw new InternalServerErrorException('Internal Server Error');
@@ -44,7 +44,7 @@ export class UserService{
 
   async getUserById(id: string):Promise<UserDto>{
     try{
-      const user = await this.userModel.findById(id);
+      const user = await this.userModel.findById(id,{password:0}); // password:0 means password will not be returned
       if(!user){
         throw new NotFoundException();
       }
